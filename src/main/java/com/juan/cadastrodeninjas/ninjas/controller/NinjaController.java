@@ -1,10 +1,20 @@
 package com.juan.cadastrodeninjas.ninjas.controller;
 
+import com.juan.cadastrodeninjas.ninjas.model.NinjaModel;
+import com.juan.cadastrodeninjas.ninjas.service.NinjaService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ninjas")
 public class NinjaController {
+
+    private NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     @GetMapping("/teste")
     public String mensagem(){
@@ -25,8 +35,8 @@ public class NinjaController {
 
     // Mostrar todos os ninjas (READ)
     @GetMapping("/listar")
-    public String mostrarTodosOsNinjas(){
-        return "Lista";
+    public List<NinjaModel> mostrarTodosOsNinjas(){
+        return ninjaService.listarNinjas();
     }
 
     // Alterar dados dos ninjas (UPDATE)
