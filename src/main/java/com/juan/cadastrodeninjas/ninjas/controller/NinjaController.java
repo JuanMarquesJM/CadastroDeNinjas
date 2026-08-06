@@ -1,5 +1,6 @@
 package com.juan.cadastrodeninjas.ninjas.controller;
 
+import com.juan.cadastrodeninjas.ninjas.dto.NinjaDTO;
 import com.juan.cadastrodeninjas.ninjas.model.NinjaModel;
 import com.juan.cadastrodeninjas.ninjas.service.NinjaService;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class NinjaController {
 
     // Adicionar Ninja (CREATE)
     @PostMapping("/criar")
-    public NinjaModel criarNinja(@RequestBody NinjaModel ninja){
+    public NinjaDTO criarNinja(@RequestBody NinjaDTO ninja){
         return ninjaService.criarNinja(ninja);
     }
 
@@ -40,9 +41,9 @@ public class NinjaController {
     }
 
     // Alterar dados dos ninjas (UPDATE)
-    @PutMapping("/alterarID")
-    public String alterarNinjaPorId(){
-        return "Alterando";
+    @PutMapping("/alterar/{id}")
+    public NinjaModel alterarNinjaPorId(@PathVariable Long id, NinjaModel ninja){
+        return ninjaService.atualizarNinja(id, ninja);
     }
 
     // Deletar ninja (DELETE)

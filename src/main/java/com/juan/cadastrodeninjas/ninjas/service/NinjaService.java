@@ -1,5 +1,7 @@
 package com.juan.cadastrodeninjas.ninjas.service;
 
+import com.juan.cadastrodeninjas.ninjas.dto.NinjaDTO;
+import com.juan.cadastrodeninjas.ninjas.mapper.NinjaMapper;
 import com.juan.cadastrodeninjas.ninjas.model.NinjaModel;
 import com.juan.cadastrodeninjas.ninjas.repository.NinjaRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,12 @@ import java.util.Optional;
 public class NinjaService {
 
     private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
     // Lista todos os meus ninjas
@@ -29,8 +34,10 @@ public class NinjaService {
     }
 
     // Criar ninjas
-    public NinjaModel criarNinja(NinjaModel ninja){
-        return ninjaRepository.save(ninja);
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO){
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        ninja = ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja);
     }
 
     // Deletar ninja
@@ -39,5 +46,14 @@ public class NinjaService {
         if(ninjaPorId.isPresent()){
             ninjaRepository.deleteById(id);
         }
+    }
+
+    // Atualizar ninja
+    public NinjaModel atualizarNinja(Long id, NinjaModel ninjaAtualizado){
+        if(ninjaRepository.existsById(id)) {
+            ninjaAtualizado.setId(id);
+            return ninjaRepository.save(ninjaAtualizado);
+        }
+        return null;
     }
 }
