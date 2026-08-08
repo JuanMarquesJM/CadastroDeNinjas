@@ -3,13 +3,9 @@ package com.juan.cadastrodeninjas.ninjas.model;
 
 import com.juan.cadastrodeninjas.missoes.model.MissoesModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,6 +28,9 @@ public class NinjaModel {
 
     @Column(name = "idade")
     private Integer idade;
+
+    @Column (name = "ranking")
+    private String ranking;
 
     // @ManyToOne - Um ninja tem uma única missão
     @ManyToOne
